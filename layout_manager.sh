@@ -9,6 +9,38 @@
 # - i3-msg    : i3 tui
 # - awk+sed+cat ...
 
+VIM_BIN="$(whereis -b vim | awk '{print $2}')"
+NVIM_BIN="$(whereis -b nvim | awk '{print $2}')"
+JQ_BIN="$(whereis -b jq | awk '{print $2}')"
+XDOTOOL_BIN="$(whereis -b xdotool | awk '{print $2}')"
+XRANDR_BIN="$(whereis -b xrandr | awk '{print $2}')"
+ROFI_BIN="$(whereis -b rofi | awk '{print $2}')"
+
+if [ -z "$NVIM_BIN" ] || [ -z "$VIM_BIN" ]; then
+  echo missing vim or neovim, please install dependencies
+  exit 1
+fi
+
+if [ -z "$JQ_BIN" ]; then
+  echo missing jq, please install dependencies
+  exit 1
+fi
+
+if [ -z "$XDOTOOL_BIN" ]; then
+  echo missing xdotool, please install dependencies
+  exit 1
+fi
+
+if [ -z "$XRANDR_BIN" ]; then
+  echo missing xrandr, please install dependencies
+  exit 1
+fi
+
+if [ -z "$ROFI_BIN" ]; then
+  echo missing rofi, please install dependencies
+  exit 1
+fi
+
 LAYOUT_PATH=~/.layouts
 
 # make directory for storing layouts
