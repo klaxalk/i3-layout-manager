@@ -15,9 +15,9 @@ So doing it manually (which I dont want) consists of following steps:
 3. wrap the file in a root node, which defines the root split.
 4. when needed, load the layout using ```i3-append ...```
 
-However, this plan has big flaws. Its not scalable, its not automated and it loading of layout does not work when windows are already present in the current workspace.
-To fix it, I built this *layout manager*.
-Currently, its a hacky-type shell script, but feel free to contribute :-).
+However, this plan has big flaws. Its not scalable, its not automated and loading of layout does not work when windows are already present in the current workspace.
+To fix it, I built this **layout manager**.
+Currently, its a hacky-type of a shell script, but feel free to contribute :-).
 
 ## How does it work?
 
