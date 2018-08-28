@@ -1,5 +1,6 @@
 #!/bin/bash
 # Author: klaxalk (klaxalk@gmail.com, github.com/klaxalk)
+#
 # Dependencies:
 # - vim/nvim  : scriptable file editing
 # - jq        : json manipulation
@@ -8,6 +9,10 @@
 # - xrandr    : getting info of current monitor
 # - i3-msg    : i3 tui
 # - awk+sed+cat ...
+# 
+# vim foldmarks: set foldmarker=#\ #{,#\ #}
+
+# #{ CHECK DEPENDENCIES
 
 VIM_BIN="$(whereis -b vim | awk '{print $2}')"
 NVIM_BIN="$(whereis -b nvim | awk '{print $2}')"
@@ -40,6 +45,8 @@ if [ -z "$ROFI_BIN" ]; then
   echo missing rofi, please install dependencies
   exit 1
 fi
+
+# #}
 
 LAYOUT_PATH=~/.layouts
 
