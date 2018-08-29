@@ -69,7 +69,7 @@ DELETE LAYOUT" | rofi -i -dmenu -no-custom -p "Select action")
 
   # get me layout names based on existing file names in the LAYOUT_PATH
   LAYOUT_NAMES=$(ls -a $LAYOUT_PATH | grep "layout.*json" | sed -nr 's/layout-(.*)\.json/\1/p' | sed 's/\s/\n/g') # layout names
-  LAYOUT_NAME=$(echo "$LAYOUT_NAMES" | rofi -dmenu -p "Select layout (you may type new name when creating)") # ask for selection
+  LAYOUT_NAME=$(echo "$LAYOUT_NAMES" | rofi -i -dmenu -p "Select layout (you may type new name when creating)") # ask for selection
   LAYOUT_NAME=${LAYOUT_NAME^^} # upper case
 
 # getting argument from command line
