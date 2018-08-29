@@ -10,7 +10,7 @@
 # - i3-msg    : i3 tui
 # - awk+sed+cat ...
 # 
-# vim foldmarks: set foldmarker=#\ #{,#\ #}
+# vim: set foldmarker=#\ #{,#\ #}
 
 # #{ CHECK DEPENDENCIES
 
