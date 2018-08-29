@@ -27,9 +27,9 @@ Currently, its a hacky-type of a shell script, but feel free to contribute :-).
 3. The location of the current workspace in the all-tree is found by matching the workspace-tree file on the monitor-tree file.
 4. The parameters of the root split are extracted and the workspace tree is wrapped in a new split.
 5. User is then asked about how should the windows be matched. The options are:
-  1. All by _instance_ (instance will be uncommented for all windows)
-  2. Match any window to any placeholder
-  3. Choose an option for each window. With this option, the user will be asked to choose between the _class_, _instance_ and _title_ for each window. The tree file will be modified according to the selected options.
+  * All by _instance_ (instance will be uncommented for all windows)
+  * Match any window to any placeholder
+  * Choose an option for each window. With this option, the user will be asked to choose between the _class_, _instance_ and _title_ for each window. The tree file will be modified according to the selected options.
 
 ## Dependencies
 
