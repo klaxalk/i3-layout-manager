@@ -23,10 +23,13 @@ Currently, its a hacky-type of a shell script, but feel free to contribute :-).
 ## How does it work?
 
 1. The workspace tree is exported usin ```i3-save-tree --workspace ...```
-2. The tree for all workpsaces in the cofused monitor is exported using ```i3-save-tree --output ...```
+2. The tree for all workspaces on the currently focused monitor exported using ```i3-save-tree --output ...```
 3. The location of the current workspace in the all-tree is found by matching the workspace-tree file on the monitor-tree file.
-
-TODO
+4. The parameters of the root split are extracted and the workspace tree is wrapped in a new split.
+5. User is then asked about how should the windows be matched. The options are:
+  1. All by _instance_ (instance will be uncommented for all windows)
+  2. Match any window to any placeholder
+  3. Choose an option for each window. With this option, the user will be asked to choose between the _class_, _instance_ and _title_ for each window. The tree file will be modified according to the selected options.
 
 ## Dependencies
 
