@@ -38,8 +38,17 @@ Currently, its a hacky-type of a shell script, but feel free to contribute :-).
 
 ## How to use it?
 
-a) By directly running the script `./layout_manager.sh`. It uses *rofi* to interact with the user, no file editing or coding is required. You can bind the script to an i3 key kombination.
-b) The layout manager can load a layout by running `./layout_manager.sh <layout_name>`. This is useful for automation. 
+* By directly running the script
+```bash
+./layout_manager.sh
+```
+It uses *rofi* to interact with the user, no file editing or coding is required.
+You can bind the script to an i3 key kombination.
+* The layout manager can load a layout by running
+```bssh
+./layout_manager.sh <layout_name>
+```
+which is useful for automation. 
 
 ## Dependencies
 
