@@ -36,11 +36,10 @@ Currently, its a hacky-type of a shell script, but feel free to contribute :-).
 7. User can load the layout either before opening windows, which creates placeholders, or after windows have been already created in a workspace. The second part normally does not work.
 8. To apply a layout, we first move all windows containing a process from the workspace using `xdotool`, which leaves only placeholders. Then we kill all the old placeholders, before we apply the layout, which spawns new placeholders in the correct places. Lastly we move the windows back, which triggers the _swallow_ mechanicm in the same way, as newly create windows do.
 
-## FAQ
+## How to use it?
 
-* Why do you use vim for the automated file editing?
-
-`Vim is great for this kind of work. A simple oneliner can do complex edits which would be difficult to program even using, e.g., python. Thanks to this, the layout manager was hacked up in single day.`
+a) By directly running the script `./layout_manager.sh`. It uses *rofi* to interact with the user, no file editing or coding is required. You can bind the script to an i3 key kombination.
+b) The layout manager can load a layout by running `./layout_manager.sh <layout_name>`. This is useful for automation. 
 
 ## Dependencies
 
@@ -54,3 +53,10 @@ Currently, its a hacky-type of a shell script, but feel free to contribute :-).
 ```bash
 sudo apt-install jq vim rofi xdotool x11-xserver-utils
 ```
+
+## FAQ
+
+* Why do you use vim for the automated file editing?
+
+`Vim is great for this kind of work. A simple oneliner can do complex edits which would be difficult to program even using, e.g., python. Thanks to this, the layout manager was hacked up in single day.`
+
