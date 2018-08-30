@@ -9,7 +9,7 @@
 # - xrandr    : getting info of current monitor
 # - i3-msg    : i3 tui
 # - awk+sed+cat ...
-# 
+#
 # vim: set foldmarker=#\ #{,#\ #}
 
 # #{ CHECK DEPENDENCIES
@@ -56,7 +56,7 @@ mkdir -p $LAYOUT_PATH > /dev/null 2>&1
 # logs
 LOG_FILE=/tmp/i3_layout_manager.txt
 
-# #{ asking for the action
+# #{ ASK FOR THE ACTION
 
 # if operating using dmenu
 if [ -z $1 ]; then
@@ -94,7 +94,7 @@ LAYOUT_FILE=$LAYOUT_PATH/layout-"$LAYOUT_NAME".json
 # get current workspace ID
 WORKSPACE_ID=$(i3-msg -t get_workspaces | jq '.[] | select(.focused==true).num' | cut -d"\"" -f2)
 
-# #{ LOADING
+# #{ LOAD
 
 if [[ "$ACTION" = "LOAD LAYOUT" ]]; then
 
@@ -144,7 +144,7 @@ fi
 
 # #}
 
-# #{ SAVING
+# #{ SAVE
 
 if [[ "$ACTION" = "SAVE LAYOUT" ]]; then
 
@@ -336,10 +336,12 @@ fi
 
 # #}
 
-# #{ DELETING
+# #{ DELETE
 
 if [[ "$ACTION" = "DELETE LAYOUT" ]]; then
   rm "$LAYOUT_FILE"
+  notify-send -u low -t 2000 "Layout deleted" -h string:x-canonical-private-synchronous:anything
+  exec ./"$0" "$@"
 fi
 
 # #}
