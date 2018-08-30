@@ -70,8 +70,8 @@ DELETE LAYOUT" | rofi -i -dmenu -no-custom -p "Select action")
   fi
 
   # get me layout names based on existing file names in the LAYOUT_PATH
-  LAYOUT_NAMES=$(ls -a $LAYOUT_PATH | grep "layout.*json" | sed -nr 's/layout-(.*)\.json/\1/p' | sed 's/\s/\n/g') # layout names
-  LAYOUT_NAME=$(echo "$LAYOUT_NAMES" | rofi -i -dmenu -p "Select layout (you may type new name when creating)") # ask for selection
+  LAYOUT_NAMES=$(ls -a $LAYOUT_PATH | grep "layout.*json" | sed -nr 's/layout-(.*)\.json/\1/p' | sed 's/\s/\n/g' | sed 's/_/ /g') # layout names
+  LAYOUT_NAME=$(echo "$LAYOUT_NAMES" | rofi -i -dmenu -p "Select layout (you may type new name when creating)" | sed 's/\s/_/g') # ask for selection
   LAYOUT_NAME=${LAYOUT_NAME^^} # upper case
 
 # getting argument from command line
@@ -278,7 +278,6 @@ MATCH ANY" | rofi -i -dmenu -p "How to identify windows? (xprop style)")
   if [[ "$CRITERION" = "default" ]]; then
     $VIM_BIN $HEADLESS -nEs -c "%g/instance/norm ^dW" -c "wqa" -- "$LAYOUT_FILE"
   elif [[ "$CRITERION" = "any" ]]; then
-    echo any
     $VIM_BIN $HEADLESS -nEs -c '%g/instance/norm ^dW3f"di"' -c "wqa" -- "$LAYOUT_FILE"
   elif [[ "$CRITERION" = "specific" ]]; then
 
@@ -329,6 +328,8 @@ MATCH ANY" | rofi -i -dmenu -p "How to identify windows? (xprop style)")
   $VIM_BIN $HEADLESS -nEs -c '%s/}\n{/},{/g' -c "wqa" -- "$LAYOUT_FILE"
   # autoformat the file
   $VIM_BIN $HEADLESS -nEs -c 'normal gg=G' -c "wqa" -- "$LAYOUT_FILE"
+
+  rm "$ALL_WS_FILE"
 
   notify-send -u low -t 2000 "Layout saved" -h string:x-canonical-private-synchronous:anything
 
