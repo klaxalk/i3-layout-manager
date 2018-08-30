@@ -255,6 +255,8 @@ MATCH ANY" | rofi -i -dmenu -p "How to identify windows? (xprop style)")
   # load old workspace file (we destroyed the old one, remember?)
   mv $BACKUP_FILE $LAYOUT_FILE
 
+  $VIM_BIN $HEADLESS -nEs -c '%s/\\\\//g' -c "wqa" -- "$LAYOUT_FILE"
+
   # delete the part below and above the block
   $VIM_BIN $HEADLESS -nEs -c "normal ${MATCH_LINE}ggdGG{kdgg" -c "wqa" -- "$ALL_WS_FILE"
   # rename the "workspace to "con" (container)
