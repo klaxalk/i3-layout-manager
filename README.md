@@ -1,7 +1,7 @@
 # i3-layout-manager
 Saving, loading and managing layouts for i3wm.
 
-![preview](https://thumbs.gfycat.com/EntireScalyBufeo-size_restricted.gif)
+![video](https://youtu.be/Q0qlUfG_lZ0)
 
 ## Preamble - dont worry, I solved all of this
 
