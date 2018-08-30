@@ -56,6 +56,8 @@ mkdir -p $LAYOUT_PATH > /dev/null 2>&1
 # logs
 LOG_FILE=/tmp/i3_layout_manager.txt
 
+# #{ asking for the action
+
 # if operating using dmenu
 if [ -z $1 ]; then
 
@@ -85,10 +87,14 @@ if [ -z "$LAYOUT_NAME" ]; then
   exit
 fi
 
+# #}
+
 LAYOUT_FILE=$LAYOUT_PATH/layout-"$LAYOUT_NAME".json
 
 # get current workspace ID
 WORKSPACE_ID=$(i3-msg -t get_workspaces | jq '.[] | select(.focused==true).num' | cut -d"\"" -f2)
+
+# #{ LOADING
 
 if [[ "$ACTION" = "LOAD LAYOUT" ]]; then
 
@@ -135,6 +141,10 @@ if [[ "$ACTION" = "LOAD LAYOUT" ]]; then
   done
 
 fi
+
+# #}
+
+# #{ SAVING
 
 if [[ "$ACTION" = "SAVE LAYOUT" ]]; then
 
@@ -322,6 +332,12 @@ MATCH ANY" | rofi -i -dmenu -p "How to identify windows? (xprop style)")
 
 fi
 
+# #}
+
+# #{ DELETING
+
 if [[ "$ACTION" = "DELETE LAYOUT" ]]; then
   rm "$LAYOUT_FILE"
 fi
+
+# #}
