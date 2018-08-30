@@ -1,6 +1,8 @@
 # i3-layout-manager
 Saving, loading and managing layouts for i3wm.
 
+![preview](https://thumbs.gfycat.com/EntireScalyBufeo-size_restricted.gif)
+
 ## Preamble - dont worry, I solved all of this
 
 i3 window manager supports saving and loading of window layouts, however, the features are bare-bone and partially missing.
