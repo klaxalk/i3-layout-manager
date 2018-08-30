@@ -12,7 +12,7 @@ User is supposed to uncomment the desierd one (and/or modify them) and delete th
 Moreover, user should add a surrouding root container which is missing in the file (this baffles me, why cant they save it too?).
 
 So doing it manually (which I dont want) consists of following steps, as described at [i3wm.org](https://i3wm.org/docs/layout-saving.html):
-1. export the workspace into jason using ```i3-save-tree --workspace ...```
+1. export the workspace into json using ```i3-save-tree --workspace ...```
 2. edit the json to match your desired matching rules for the windows
 3. wrap the file in a root node, which defines the root split.
 4. when needed, load the layout using ```i3-append ...```
