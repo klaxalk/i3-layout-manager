@@ -8,7 +8,7 @@ Saving, loading and managing layouts for i3wm.
 i3 window manager supports saving and loading of window layouts, however, the features are bare-bone and partially missing.
 According to the [manual](https://i3wm.org/docs/layout-saving.html), the layout tree can be exported into a json file.
 The file contains a description of the containers of a workspace with prefilled (and commented) potential matching rules for the windows.
-User is supposed to uncomment the desierd one (and/or modify it) and delete the unsused ones.
+User is supposed to uncomment the desierd one (and/or modify them) and delete the unsused ones.
 Moreover, user should add a surrouding root container which is missing in the file (this baffles me, why cant they save it too?).
 
 So doing it manually (which I dont want) consists of following steps, as described at [i3wm.org](https://i3wm.org/docs/layout-saving.html):
@@ -19,7 +19,7 @@ So doing it manually (which I dont want) consists of following steps, as describ
 
 However, this plan has flaws.
 Its not scalable, its not automated and loading a layout does not work when windows are already present in the current workspace.
-To fix it, I built this **layout manager**.
+To fix it, I built this **i3-layout-manager**.
 Currently, its a hacky-type of a shell script, but feel free to contribute :-).
 
 ## How does it work?
