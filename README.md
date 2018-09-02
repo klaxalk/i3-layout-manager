@@ -31,7 +31,7 @@ Currently, its a hacky-type of a shell script, but feel free to contribute :-).
 5. The user is then asked about how should the windows be matched. The options are:
   * All by _instance_ (instance will be uncommented for all windows)
   * Match any window to any placeholder
-  * Choose an option for each window. The user will be asked to choose between the _class_, _instance_ and _title_ for each window. The tree file will be modified according to the selected options automatically.
+  * Choose an option for each window. The user will be asked to choose between the _class_, _instance_ and _title_ for each window. The tree file will be modified automatically according to the selected options.
   ![matching](misc/choice_matching.jpg)
 6. After that, the tree is saved and ready to be loaded.
 7. The user can load the layout either before opening windows, which creates placeholders, or after, which adds the existing windows to the layout. The second part normally does not work.
