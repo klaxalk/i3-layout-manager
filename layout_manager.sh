@@ -84,7 +84,7 @@ fi
 
 # no action, exit
 if [ -z "$LAYOUT_NAME" ]; then
-  exit
+  exec "$0" "$@"
 fi
 
 # #}
@@ -342,7 +342,7 @@ fi
 if [[ "$ACTION" = "DELETE LAYOUT" ]]; then
   rm "$LAYOUT_FILE"
   notify-send -u low -t 2000 "Layout deleted" -h string:x-canonical-private-synchronous:anything
-  exec ./"$0" "$@"
+  exec "$0" "$@"
 fi
 
 # #}
