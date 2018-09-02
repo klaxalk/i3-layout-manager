@@ -50,6 +50,11 @@ You can bind the script to an i3 key kombination.
 ```
 which is useful for automation. 
 
+## Layout files
+
+The layout files are store by default in `~/.layouts`.
+Feel free to tinker with the matching rules by hand.
+
 ## Dependencies
 
 * vim/nvim
