@@ -1,6 +1,8 @@
 # i3-layout-manager
 Saving, loading and managing layouts for i3wm.
 
+Video:
+
 [![Play video](https://img.youtube.com/vi/Q0qlUfG_lZ0/0.jpg)](https://www.youtube.com/watch?v=Q0qlUfG_lZ0)
 
 ## Preamble - don't worry, I solved all of this
