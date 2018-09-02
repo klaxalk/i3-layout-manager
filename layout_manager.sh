@@ -199,6 +199,9 @@ MATCH ANY" | rofi -i -dmenu -p "How to identify windows? (xprop style)")
   # first we need to do some preprocessing, before we can find, where in the
   # all-tree file we can find the workspace part.
 
+  # remove the floating window part, that would screw up out matching
+  $VIM_BIN $HEADLESS -nEs -c '%g/"floating_con"/norm ?{nd%' -c "wqa" -- "$LAYOUT_FILE"
+
   # remove comments
   $VIM_BIN $HEADLESS -nEs -c '%g/\/\//norm dd' -c "wqa" -- "$LAYOUT_FILE"
   $VIM_BIN $HEADLESS -nEs -c '%g/\/\//norm dd' -c "wqa" -- "$ALL_WS_FILE"
@@ -320,12 +323,22 @@ MATCH ANY" | rofi -i -dmenu -p "How to identify windows? (xprop style)")
 
   # delete all comments
   $VIM_BIN $HEADLESS -nEs -c '%g/\/\//norm dd' -c "wqa" -- "$LAYOUT_FILE"
+
   # add a missing comma to the last element of array we just deleted
   $VIM_BIN $HEADLESS -nEs -c '%g/swallows/norm j^%k:s/,$//g' -c "wqa" -- "$LAYOUT_FILE"
+
   # delete all empty lines
   $VIM_BIN $HEADLESS -nEs -c '%g/^$/norm dd' -c "wqa" -- "$LAYOUT_FILE"
+
+  # pick up floating containers and move them out of the root container
+  $VIM_BIN $HEADLESS -nEs -c '%g/floating_con/norm ?{nd%"_ddGAp' -c "wqa" -- "$LAYOUT_FILE"
+
   # add missing commas between the newly created inner parts of the root element
   $VIM_BIN $HEADLESS -nEs -c '%s/}\n{/},{/g' -c "wqa" -- "$LAYOUT_FILE"
+
+  # surroun everythin in []
+  $VIM_BIN $HEADLESS -nEs -c 'normal ggO[Go]' -c "wqa" -- "$LAYOUT_FILE"
+
   # autoformat the file
   $VIM_BIN $HEADLESS -nEs -c 'normal gg=G' -c "wqa" -- "$LAYOUT_FILE"
 
