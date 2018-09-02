@@ -32,6 +32,7 @@ Currently, its a hacky-type of a shell script, but feel free to contribute :-).
   * All by _instance_ (instance will be uncommented for all windows)
   * Match any window to any placeholder
   * Choose an option for each window. The user will be asked to choose between the _class_, _instance_ and _title_ for each window. The tree file will be modified according to the selected options automatically.
+  ![matching](misc/choice_matching.jpg)
 6. After that, the tree is saved and ready to be loaded.
 7. The user can load the layout either before opening windows, which creates placeholders, or after, which adds the existing windows to the layout. The second part normally does not work.
 8. To apply a layout, we first move all windows containing a process from the workspace using `xdotool`, which leaves only placeholders. Then we kill all the old placeholders before we apply the layout, which spawns new placeholders in the correct places. Lastly, we move the windows back, which triggers the _swallow_ mechanism in the same way, as newly create windows do.
