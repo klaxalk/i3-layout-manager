@@ -36,7 +36,7 @@ Currently, its a hacky-type of a shell script, but feel free to contribute :-).
 2. The tree for all workspaces on the currently focused monitor exported using ```i3-save-tree --output ...```
 3. The location of the current workspace in the all-tree is found by matching the workspace-tree file on the monitor-tree file.
 4. The parameters of the root split are extracted, and the workspace tree is wrapped in a new split.
-5. The floating windows are extreacted from within and appended behind the root split.
+5. The floating windows are extracted from within and appended behind the root split.
 6. The user is then asked about how should the windows be matched. The options are:
   * All by _instance_ (instance will be uncommented for all windows)
   * Match any window to any placeholder
