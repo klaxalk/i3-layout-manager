@@ -21,7 +21,7 @@ XDOTOOL_BIN="$(whereis -b xdotool | awk '{print $2}')"
 XRANDR_BIN="$(whereis -b xrandr | awk '{print $2}')"
 ROFI_BIN="$(whereis -b rofi | awk '{print $2}')"
 
-if [ -z "$NVIM_BIN" ] || [ -z "$VIM_BIN" ]; then
+if [ ! -z "$NVIM_BIN" ] && [ ! -z "$VIM_BIN" ]; then
   echo missing vim or neovim, please install dependencies
   exit 1
 fi
