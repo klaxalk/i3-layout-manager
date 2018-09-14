@@ -163,7 +163,7 @@ MATCH ANY" | rofi -i -dmenu -p "How to identify windows? (xprop style)")
 
   ALL_WS_FILE=$LAYOUT_PATH/all-layouts.json
 
-  CURRENT_MONITOR=$(xrandr | grep -w connected | awk '{print $1}')
+  CURRENT_MONITOR=$(i3-msg -t get_workspaces | jq '.[] | select(.focused==true).output' | cut -d"\"" -f2)
 
   # get the i3-tree for all workspaces for the current monitor
   i3-save-tree --output "$CURRENT_MONITOR" > "$ALL_WS_FILE" 2>&1
