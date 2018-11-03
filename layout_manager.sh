@@ -91,7 +91,7 @@ fi
 
 LAYOUT_FILE=$LAYOUT_PATH/layout-"$LAYOUT_NAME".json
 
-if [ ! -f "$LAYOUT_FILE" ]; then
+if [ "$ACTION" == "LOAD LAYOUT"] && [ ! -f "$LAYOUT_FILE" ]; then
   exit
 fi
 
