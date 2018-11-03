@@ -91,6 +91,10 @@ fi
 
 LAYOUT_FILE=$LAYOUT_PATH/layout-"$LAYOUT_NAME".json
 
+if [ ! -f "$LAYOUT_FILE" ]; then
+  exit
+fi
+
 # get current workspace ID
 WORKSPACE_ID=$(i3-msg -t get_workspaces | jq '.[] | select(.focused==true).num' | cut -d"\"" -f2)
 
