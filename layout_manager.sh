@@ -91,7 +91,7 @@ fi
 
 LAYOUT_FILE=$LAYOUT_PATH/layout-"$LAYOUT_NAME".json
 
-if [ "$ACTION" == "LOAD LAYOUT"] && [ ! -f "$LAYOUT_FILE" ]; then
+if [ "$ACTION" == "LOAD LAYOUT" ] && [ ! -f "$LAYOUT_FILE" ]; then
   exit
 fi
 
@@ -174,6 +174,10 @@ MATCH ANY" | rofi -i -dmenu -p "How to identify windows? (xprop style)")
 
   # get the i3-tree for the current workspace
   i3-save-tree --workspace "$WORKSPACE_ID" > "$LAYOUT_FILE" 2>&1
+
+  # for debug
+  # cp $LAYOUT_FILE $LAYOUT_PATH/ws_temp.txt
+  # cp $ALL_WS_FILE $LAYOUT_PATH/all_temp.txt
 
   # back the output file.. we are gonna modify it and alter we will need it back
   BACKUP_FILE=$LAYOUT_PATH/.layout_backup.txt
@@ -276,7 +280,7 @@ MATCH ANY" | rofi -i -dmenu -p "How to identify windows? (xprop style)")
   # the information about the split type
   cat $ALL_WS_FILE | cat - $LAYOUT_FILE > /tmp/tmp.txt && mv /tmp/tmp.txt $LAYOUT_FILE
   # add closing bracked at the end
-  $VIM_BIN $HEADLESS -nEs -c "normal Go]}" -c "wqa" -- "$LAYOUT_FILE"
+  $VIM_BIN $HEADLESS -nEs -c 'normal Go]}' -c "wqa" -- "$LAYOUT_FILE"
 
   # now we have to do some postprocessing on it, all is even advices on the official website
   # https://i3wm.org/docs/layout-saving.html
@@ -335,7 +339,10 @@ MATCH ANY" | rofi -i -dmenu -p "How to identify windows? (xprop style)")
   $VIM_BIN $HEADLESS -nEs -c '%g/^$/norm dd' -c "wqa" -- "$LAYOUT_FILE"
 
   # pick up floating containers and move them out of the root container
-  $VIM_BIN $HEADLESS -nEs -c '%g/floating_con/norm ?{nd%"_ddGAp' -c "wqa" -- "$LAYOUT_FILE"
+  $VIM_BIN $HEADLESS -nEs -c '%g/floating_con/norm ?{nd%GAp' -c "wqa" -- "$LAYOUT_FILE"
+
+  # delete all empty lines
+  $VIM_BIN $HEADLESS -nEs -c '%g/^$/norm dd' -c "wqa" -- "$LAYOUT_FILE"
 
   # add missing commas between the newly created inner parts of the root element
   $VIM_BIN $HEADLESS -nEs -c '%s/}\n{/},{/g' -c "wqa" -- "$LAYOUT_FILE"
