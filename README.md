@@ -75,7 +75,7 @@ Feel free to tinker with the matching rules by hand.
 * x11-xserver-utils
 
 ```bash
-sudo apt-install jq vim rofi xdotool x11-xserver-utils
+sudo apt install jq vim rofi xdotool x11-xserver-utils
 ```
 
 ## FAQ
