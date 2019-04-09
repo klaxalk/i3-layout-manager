@@ -127,7 +127,9 @@ if [[ "$ACTION" = "LOAD LAYOUT" ]]; then
 
   # delete all empty layout windows from the workspace
   for (( i=0 ; $a-20 ; a=$a+1 )); do
-    i3-msg "focus parent, kill" > $LOG_FILE 2>&1
+    if [ $(xprop -id $(xdotool getactivewindow) | grep -q _NET_WM_STATE_STICKY) -eq 0 ]; then
+      i3-msg "focus parent, kill" > $LOG_FILE 2>&1
+    fi
   done
 
   # then we can apply to chosen layout
