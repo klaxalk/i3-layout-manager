@@ -48,7 +48,7 @@ fi
 
 # #}
 
-LAYOUT_PATH=~/.layouts
+LAYOUT_PATH=$XDG_CONFIG_HOME/i3-layout-manager/layouts
 
 # make directory for storing layouts
 mkdir -p $LAYOUT_PATH > /dev/null 2>&1
