@@ -82,7 +82,12 @@ DELETE LAYOUT" | rofi -i -dmenu -no-custom -p "Select action")
 else
 
   ACTION="LOAD LAYOUT"
-  LAYOUT_NAME="${1^^}"
+  # if the layout name is a full path, just pass it, otherwise convert it to upper case
+  if [[ "${1}" == *".json" ]]; then
+    LAYOUT_NAME="${1}"
+  else
+    LAYOUT_NAME="${1^^}"
+  fi
 
 fi
 
@@ -93,7 +98,14 @@ fi
 
 # #}
 
-LAYOUT_FILE=$LAYOUT_PATH/layout-"$LAYOUT_NAME".json
+# if the layout name is a full path, use it, otherwise fabricate the full path
+if [[ $LAYOUT_NAME == *".json" ]]; then
+  LAYOUT_FILE="$LAYOUT_NAME"
+else
+  LAYOUT_FILE=$LAYOUT_PATH/layout-"$LAYOUT_NAME".json
+fi
+
+echo $LAYOUT_FILE
 
 if [ "$ACTION" == "LOAD LAYOUT" ] && [ ! -f "$LAYOUT_FILE" ]; then
   exit
