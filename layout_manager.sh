@@ -59,6 +59,7 @@ mkdir -p $LAYOUT_PATH > /dev/null 2>&1
 
 # logs
 LOG_FILE=/tmp/i3_layout_manager.txt
+echo "" > "$LOG_FILE"
 
 # #{ ASK FOR THE ACTION
 
@@ -129,40 +130,69 @@ if [[ "$ACTION" = "LOAD LAYOUT" ]]; then
   # get the list of windows on the current workspace
   WINDOWS=$(xdotool search --all --onlyvisible --desktop $(xprop -notype -root _NET_CURRENT_DESKTOP | cut -c 24-) "" 2>/dev/null)
 
+  echo "About to unload all windows from the workspace" >> "$LOG_FILE"
+
   for window in $WINDOWS; do
 
     HAS_PID=$(xdotool getwindowpid $window 2>&1 | grep "pid" | wc -l)
 
+    echo "Unloading window '$window'" >> "$LOG_FILE"
+
     if [ ! $HAS_PID -eq 0 ]; then
-      echo "$window does not have a process"
+      echo "Window '$window' does not have a process" >> "$LOG_FILE"
     else
-      xdotool windowunmap $window
+      xdotool windowunmap "$window" >> "$LOG_FILE" 2>&1
+      echo "'xdotool windounmap $window' returned $?" >> "$LOG_FILE"
     fi
 
   done
 
-  # delete all empty layout windows from the workspace
-  for (( i=0 ; $a-20 ; a=$a+1 )); do
+  echo "" >> "$LOG_FILE"
+  echo "About to delete all empty window placeholders" >> "$LOG_FILE"
 
-    # check window for STICKY before killing - if sticky do not kill 
+  # delete all empty layout windows from the workspace
+  # we just try to focus any window on the workspace (there should not be any, we unloaded them)
+  for (( i=0 ; $a-100 ; a=$a+1 )); do
+
+    # check window for STICKY before killing - if sticky do not kill
     xprop -id $(xdotool getwindowfocus) | grep -q '_NET_WM_STATE_STICK'
 
     if [ $? -eq 1 ]; then
-      i3-msg "focus parent, kill" > $LOG_FILE 2>&1
+
+      echo "Killing an unsued placeholder" >> "$LOG_FILE"
+      i3-msg "focus parent, kill" >> "$LOG_FILE" 2>&1
+
+      i3_msg_ret="$?"
+
+      if [ "$i3_msg_ret" == 0 ]; then
+        echo "Empty placeholder successfully killed" >> "$LOG_FILE"
+      else
+        echo "Empty placeholder could not be killed, breaking" >> "$LOG_FILE"
+        break
+      fi
     fi
   done
 
+  echo "" >> "$LOG_FILE"
+  echo "Applying the layout" >> "$LOG_FILE"
+
   # then we can apply to chosen layout
-  i3-msg "append_layout $LAYOUT_FILE" > $LOG_FILE 2>&1
+  i3-msg "append_layout $LAYOUT_FILE" >> "$LOG_FILE" 2>&1
+
+  echo "" >> "$LOG_FILE"
+  echo "About to bring all windows back" >> "$LOG_FILE"
 
   # and then we can reintroduce the windows back to the workspace
   for window in $WINDOWS; do
     HAS_PID=$(xdotool getwindowpid $window 2>&1 | grep "pid" | wc -l)
 
+    echo "Loading back window '$window'" >> "$LOG_FILE"
+
     if [ ! $HAS_PID -eq 0 ]; then
-      echo "$window does not have a process"
+      echo "$window does not have a process" >> "$LOG_FILE"
     else
-      xdotool windowmap $window
+      xdotool windowmap "$window"
+      echo "'xdotool windowmap $window' returned $?" >> "$LOG_FILE"
     fi
   done
 
