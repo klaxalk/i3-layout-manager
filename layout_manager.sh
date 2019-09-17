@@ -101,7 +101,7 @@ fi
 
 # if the layout name is a full path, use it, otherwise fabricate the full path
 if [[ $LAYOUT_NAME == *".json" ]]; then
-  LAYOUT_FILE="$LAYOUT_NAME"
+  LAYOUT_FILE=`realpath "$LAYOUT_NAME"`
 else
   LAYOUT_FILE=$LAYOUT_PATH/layout-"$LAYOUT_NAME".json
 fi
