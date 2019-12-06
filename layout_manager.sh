@@ -134,11 +134,13 @@ if [[ "$ACTION" = "LOAD LAYOUT" ]]; then
 
   for window in $WINDOWS; do
 
-    HAS_PID=$(xdotool getwindowpid $window 2>&1 | grep "pid" | wc -l)
+    # the grep filters out a line which reports on the command that was just being called
+    # however, the line is not there when calling with rofi from i3
+    HAS_PID=$(xdotool getwindowpid $window 2>&1 | grep -v command | wc -l)
 
     echo "Unloading window '$window'" >> "$LOG_FILE"
 
-    if [ ! $HAS_PID -eq 0 ]; then
+    if [ $HAS_PID -eq 0 ]; then
       echo "Window '$window' does not have a process" >> "$LOG_FILE"
     else
       xdotool windowunmap "$window" >> "$LOG_FILE" 2>&1
@@ -184,11 +186,14 @@ if [[ "$ACTION" = "LOAD LAYOUT" ]]; then
 
   # and then we can reintroduce the windows back to the workspace
   for window in $WINDOWS; do
-    HAS_PID=$(xdotool getwindowpid $window 2>&1 | grep "pid" | wc -l)
+
+    # the grep filters out a line which reports on the command that was just being called
+    # however, the line is not there when calling with rofi from i3
+    HAS_PID=$(xdotool getwindowpid $window 2>&1 | grep -v command | wc -l)
 
     echo "Loading back window '$window'" >> "$LOG_FILE"
 
-    if [ ! $HAS_PID -eq 0 ]; then
+    if [ $HAS_PID -eq 0 ]; then
       echo "$window does not have a process" >> "$LOG_FILE"
     else
       xdotool windowmap "$window"
