@@ -58,12 +58,11 @@ You can bind the script to an i3 key combination.
 ```bssh
 ./layout_manager.sh <layout_name>
 ```
-which is useful for automation. 
+which is useful for automation. If the `layout_name` ends with .json, the manager treats the argument as a path to the particular layout file.
 
 ## Layout files
 
-The layout files are stored by default in `~/.layouts`.
-Feel free to tinker with the matching rules by hand.
+The layout files are stored by default in `~/.layouts` or in `~/.config/i3-layout-manager/layouts`, depending on your `$XDG_CONFIG_HOME`.
 
 ## Dependencies
 
@@ -73,7 +72,7 @@ Feel free to tinker with the matching rules by hand.
 * rofi
 * xdotool
 * x11-xserver-utils
-* indent, libanyevent-i3-perl [issue](https://github.com/klaxalk/i3-layout-manager/issues/17)
+* indent, libanyevent-i3-perl
 
 ```bash
 sudo apt install jq vim rofi xdotool x11-xserver-utils indent libanyevent-i3-perl
@@ -83,7 +82,7 @@ sudo apt install jq vim rofi xdotool x11-xserver-utils indent libanyevent-i3-per
 
 * **Does it work on floating windows?**
 
-Yes
+Yes, sometimes. Some programs behave strangly, e.g., the *Thunar file* manager fails to load into a floating place holder.
 
 * **Will it run the programs for me?**
 
