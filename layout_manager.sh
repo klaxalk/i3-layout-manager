@@ -248,9 +248,11 @@ MATCH ANY" | rofi -i -dmenu -p "How to identify windows? (xprop style)")
   if [ -x "$(whereis nvim | awk '{print $2}')" ]; then
     VIM_BIN="$(whereis nvim | awk '{print $2}')"
     HEADLESS="--headless"
+    GOT_NVIM=true
   elif [ -x "$(whereis vim | awk '{print $2}')" ]; then
     VIM_BIN="$(whereis vim | awk '{print $2}')"
     HEADLESS=""
+    GOT_VIM=true
   fi
 
   # the allaround task is to produce a single json file with the description
@@ -269,7 +271,12 @@ MATCH ANY" | rofi -i -dmenu -p "How to identify windows? (xprop style)")
   # all-tree file we can find the workspace part.
 
   # remove the floating window part, that would screw up out matching
-  $VIM_BIN $HEADLESS -nEs -c '%g/"floating_con"/norm ?{nd%' -c "wqa" -- "$LAYOUT_FILE"
+  if [ -n "$GOT_VIM" ]; then
+    $VIM_BIN $HEADLESS -nEs -c '%g/floating_con/norm [{d%' -c "wqa" -- "$LAYOUT_FILE"
+  else
+    # when scripting d% to delete to the next in pair, it actually leaves one of the pair characters there
+    $VIM_BIN $HEADLESS -nEs -c '%g/floating_con/norm [{d%dd' -c "wqa" -- "$LAYOUT_FILE"
+  fi
 
   # remove comments
   $VIM_BIN $HEADLESS -nEs -c '%g/\/\//norm dd' -c "wqa" -- "$LAYOUT_FILE"
@@ -400,7 +407,13 @@ MATCH ANY" | rofi -i -dmenu -p "How to identify windows? (xprop style)")
   $VIM_BIN $HEADLESS -nEs -c '%g/^$/norm dd' -c "wqa" -- "$LAYOUT_FILE"
 
   # pick up floating containers and move them out of the root container
-  $VIM_BIN $HEADLESS -nEs -c '%g/floating_con/norm ?{nd%GAp' -c "wqa" -- "$LAYOUT_FILE"
+  if [ -n "$GOT_VIM" ]; then
+    $VIM_BIN $HEADLESS -nEs -c '%g/floating_con/norm [{d%GAp' -c "wqa" -- "$LAYOUT_FILE"
+  else
+    # nvim has a bug currently:
+    # when scripting d% to delete to the next in pair, it actually leaves one of the pair characters there
+    $VIM_BIN $HEADLESS -nEs -c "%g/floating_con/norm [{%ma%d'aGAp" -c "wqa" -- "$LAYOUT_FILE"
+  fi
 
   # delete all empty lines
   $VIM_BIN $HEADLESS -nEs -c '%g/^$/norm dd' -c "wqa" -- "$LAYOUT_FILE"
