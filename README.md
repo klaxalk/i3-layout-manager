@@ -73,10 +73,10 @@ Feel free to tinker with the matching rules by hand.
 * rofi
 * xdotool
 * x11-xserver-utils
-* indent, ibanyevent-i3-perl [issue](https://github.com/klaxalk/i3-layout-manager/issues/17)
+* indent, libanyevent-i3-perl [issue](https://github.com/klaxalk/i3-layout-manager/issues/17)
 
 ```bash
-sudo apt install jq vim rofi xdotool x11-xserver-utils indent ibanyevent-i3-perl
+sudo apt install jq vim rofi xdotool x11-xserver-utils indent libanyevent-i3-perl
 ```
 
 ## FAQ
