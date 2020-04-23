@@ -82,7 +82,7 @@ sudo apt install jq vim rofi xdotool x11-xserver-utils indent libanyevent-i3-per
 
 * **Does it work on floating windows?**
 
-Yes, sometimes. Some programs behave strangly, e.g., the *Thunar file* manager fails to load into a floating place holder.
+Yes, sometimes. Some programs behave strangely, e.g., the *Thunar file* manager fails to load into a floating place holder.
 
 * **Will it run the programs for me?**
 
