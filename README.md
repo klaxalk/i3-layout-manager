@@ -33,7 +33,7 @@ Currently, its a hacky-type of a shell script, but feel free to contribute :-).
 ## How does it work?
 
 1. The workspace tree is exported using ```i3-save-tree --workspace ...```
-2. The tree for all workspaces on the currently focused monitor exported using ```i3-save-tree --output ...```
+2. The tree for all workspaces on the currently focused monitor is exported using ```i3-save-tree --output ...```
 3. The location of the current workspace in the all-tree is found by matching the workspace-tree file on the monitor-tree file.
 4. The parameters of the root split are extracted, and the workspace tree is wrapped in a new split.
 5. The floating windows are extracted from within and appended behind the root split.
@@ -43,8 +43,8 @@ Currently, its a hacky-type of a shell script, but feel free to contribute :-).
   * Choose an option for each window. The user will be asked to choose between the _class_, _instance_ and _title_ for each window. The tree file will be modified automatically according to the selected options.
   ![matching](misc/choice_matching.jpg)
 7. After that, the tree is saved and ready to be loaded.
-8. The user can load the layout either before opening windows, which creates placeholders, or after, which adds the existing windows to the layout. The second part normally does not work.
-9. To apply a layout, we first move all windows containing a process from the workspace using `xdotool`, which leaves only placeholders. Then we kill all the old placeholders before we apply the layout, which spawns new placeholders in the correct places. Lastly, we move the windows back, which triggers the _swallow_ mechanism in the same way, as newly create windows do.
+8. The user can load the layout either before opening windows, which creates placeholders, or after, which adds the existing windows to the layout.
+9. To apply a layout, we first move all windows containing a process from the workspace using `xdotool`, which leaves only placeholders. Then we remove all the old placeholders before we apply the layout, which spawns new placeholders in the correct places. Lastly, we move the windows back, which triggers the _swallow_ mechanism in the same way, as newly created windows do.
 
 ## How to use it?
 
@@ -53,12 +53,12 @@ Currently, its a hacky-type of a shell script, but feel free to contribute :-).
 ./layout_manager.sh
 ```
 It uses *rofi* to interact with the user, no file editing or coding is required.
-You can bind the script to an i3 key combination.
+You can bind the script to an i3 key key combo.
 * The layout manager can load a layout by running
 ```bssh
 ./layout_manager.sh <layout_name>
 ```
-which is useful for automation. If the `layout_name` ends with .json, the manager treats the argument as a path to the particular layout file.
+which is useful for automation. If the `layout_name` ends with .json, the manager treats the argument as a path to a particular layout file.
 
 ## Layout files
 
