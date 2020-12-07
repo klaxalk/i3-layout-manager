@@ -96,3 +96,9 @@ No, it only affects the current workspace. However, layouts can be used on anoth
 
 Vim is great for this kind of work. A simple one-liner can do complex edits which would be difficult to program even using, e.g., python. Thanks to this, the layout manager was hacked up in a single day.
 
+## Troubleshooting
+
+* **On Arch Linux, there is no package `libanyevent-i3-perl`, so my saved layout file says `Can't locate AnyEvent/I3.pm in @INC (you may need to install the AnyEvent::I3 module)`**
+
+Install `perl-anyevent-i3` with your package manager. ([Source](https://old.reddit.com/r/archlinux/comments/289g9u/i3_48_introduces_layout_saving_and_restoring/ci8saf0/))
+
