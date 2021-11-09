@@ -272,26 +272,26 @@ MATCH ANY" | rofi -i -dmenu -p "How to identify windows? (xprop style)")
 
   # remove the floating window part, that would screw up out matching
   if [ -n "$GOT_VIM" ]; then
-    $VIM_BIN $HEADLESS -nEs -c '%g/floating_con/norm [{d%' -c "wqa" -- "$LAYOUT_FILE"
+    $VIM_BIN $HEADLESS -nEs -u NONE -c '%g/floating_con/norm [{d%' -c "wqa" -- "$LAYOUT_FILE"
   else
     # when scripting d% to delete to the next in pair, it actually leaves one of the pair characters there
-    $VIM_BIN $HEADLESS -nEs -c '%g/floating_con/norm [{d%dd' -c "wqa" -- "$LAYOUT_FILE"
+    $VIM_BIN $HEADLESS -nEs -u NONE -c '%g/floating_con/norm [{d%dd' -c "wqa" -- "$LAYOUT_FILE"
   fi
 
   # remove comments
-  $VIM_BIN $HEADLESS -nEs -c '%g/\/\//norm dd' -c "wqa" -- "$LAYOUT_FILE"
-  $VIM_BIN $HEADLESS -nEs -c '%g/\/\//norm dd' -c "wqa" -- "$ALL_WS_FILE"
+  $VIM_BIN $HEADLESS -nEs -u NONE -c '%g/\/\//norm dd' -c "wqa" -- "$LAYOUT_FILE"
+  $VIM_BIN $HEADLESS -nEs -u NONE -c '%g/\/\//norm dd' -c "wqa" -- "$ALL_WS_FILE"
 
   # remove indents
-  $VIM_BIN $HEADLESS -nEs -c '%g/^/norm 0d^' -c "wqa" -- "$LAYOUT_FILE"
-  $VIM_BIN $HEADLESS -nEs -c '%g/^/norm 0d^' -c "wqa" -- "$ALL_WS_FILE"
+  $VIM_BIN $HEADLESS -nEs -u NONE -c '%g/^/norm 0d^' -c "wqa" -- "$LAYOUT_FILE"
+  $VIM_BIN $HEADLESS -nEs -u NONE -c '%g/^/norm 0d^' -c "wqa" -- "$ALL_WS_FILE"
 
   # remove commas
-  $VIM_BIN $HEADLESS -nEs -c '%s/^},$/}/g' -c "wqa" -- "$LAYOUT_FILE"
-  $VIM_BIN $HEADLESS -nEs -c '%s/^},$/}/g' -c "wqa" -- "$ALL_WS_FILE"
+  $VIM_BIN $HEADLESS -nEs -u NONE -c '%s/^},$/}/g' -c "wqa" -- "$LAYOUT_FILE"
+  $VIM_BIN $HEADLESS -nEs -u NONE -c '%s/^},$/}/g' -c "wqa" -- "$ALL_WS_FILE"
 
   # remove empty lines in the the workspace file
-  $VIM_BIN $HEADLESS -nEs -c '%g/^$/norm dd' -c "wqa" -- "$LAYOUT_FILE"
+  $VIM_BIN $HEADLESS -nEs -u NONE -c '%g/^$/norm dd' -c "wqa" -- "$LAYOUT_FILE"
 
   # now I will try to find the part in the big file which containts the
   # small file. I have not found a suitable solution using off-the-shelf
@@ -334,30 +334,30 @@ MATCH ANY" | rofi -i -dmenu -p "How to identify windows? (xprop style)")
   # load old workspace file (we destroyed the old one, remember?)
   mv $BACKUP_FILE $LAYOUT_FILE
 
-  $VIM_BIN $HEADLESS -nEs -c '%s/\\\\//g' -c "wqa" -- "$LAYOUT_FILE"
+  $VIM_BIN $HEADLESS -nEs -u NONE -c '%s/\\\\//g' -c "wqa" -- "$LAYOUT_FILE"
 
   # delete the part below and above the block
-  $VIM_BIN $HEADLESS -nEs -c "normal ${MATCH_LINE}ggdGG{kdgg" -c "wqa" -- "$ALL_WS_FILE"
+  $VIM_BIN $HEADLESS -nEs -u NONE -c "normal ${MATCH_LINE}ggdGG{kdgg" -c "wqa" -- "$ALL_WS_FILE"
   # rename the "workspace to "con" (container)
-  $VIM_BIN $HEADLESS -nEs -c '%g/type/norm ^Wlciwcon' -c "wqa" -- "$ALL_WS_FILE"
+  $VIM_BIN $HEADLESS -nEs -u NONE -c '%g/type/norm ^Wlciwcon' -c "wqa" -- "$ALL_WS_FILE"
   # change the fullscrean to 0
-  $VIM_BIN $HEADLESS -nEs -c '%g/fullscreen/norm ^Wr0' -c "wqa" -- "$ALL_WS_FILE"
+  $VIM_BIN $HEADLESS -nEs -u NONE -c '%g/fullscreen/norm ^Wr0' -c "wqa" -- "$ALL_WS_FILE"
 
   # extract the needed part of the file and add it to the workspace file
   # this part is mostly according to the i3 manual, except we actually put there
   # the information about the split type
   cat $ALL_WS_FILE | cat - $LAYOUT_FILE > /tmp/tmp.txt && mv /tmp/tmp.txt $LAYOUT_FILE
   # add closing bracked at the end
-  $VIM_BIN $HEADLESS -nEs -c 'normal Go]}' -c "wqa" -- "$LAYOUT_FILE"
+  $VIM_BIN $HEADLESS -nEs -u NONE -c 'normal Go]}' -c "wqa" -- "$LAYOUT_FILE"
 
   # now we have to do some postprocessing on it, all is even advices on the official website
   # https://i3wm.org/docs/layout-saving.html
 
   # uncomment the instance swallow rule
   if [[ "$CRITERION" = "default" ]]; then
-    $VIM_BIN $HEADLESS -nEs -c "%g/instance/norm ^dW" -c "wqa" -- "$LAYOUT_FILE"
+    $VIM_BIN $HEADLESS -nEs -u NONE -c "%g/instance/norm ^dW" -c "wqa" -- "$LAYOUT_FILE"
   elif [[ "$CRITERION" = "any" ]]; then
-    $VIM_BIN $HEADLESS -nEs -c '%g/instance/norm ^dW3f"di"' -c "wqa" -- "$LAYOUT_FILE"
+    $VIM_BIN $HEADLESS -nEs -u NONE -c '%g/instance/norm ^dW3f"di"' -c "wqa" -- "$LAYOUT_FILE"
   elif [[ "$CRITERION" = "specific" ]]; then
 
     LAST_LINE=1
@@ -383,7 +383,7 @@ MATCH ANY" | rofi -i -dmenu -p "How to identify windows? (xprop style)")
           SELECTED_OPTION=$(expr ${LINE_NUM} + 1)
         fi
 
-        $VIM_BIN $HEADLESS -nEs -c "norm ${SELECTED_OPTION}gg^dW" -c "wqa" -- "$LAYOUT_FILE"
+        $VIM_BIN $HEADLESS -nEs -u NONE -c "norm ${SELECTED_OPTION}gg^dW" -c "wqa" -- "$LAYOUT_FILE"
 
         LAST_LINE=$( expr $SELECTED_OPTION)
 
@@ -395,37 +395,37 @@ MATCH ANY" | rofi -i -dmenu -p "How to identify windows? (xprop style)")
   fi
 
   # uncomment the transient_for
-  $VIM_BIN $HEADLESS -nEs -c '%g/transient_for/norm ^dW' -c "wqa" -- "$LAYOUT_FILE"
+  $VIM_BIN $HEADLESS -nEs -u NONE -c '%g/transient_for/norm ^dW' -c "wqa" -- "$LAYOUT_FILE"
 
   # delete all comments
-  $VIM_BIN $HEADLESS -nEs -c '%g/\/\//norm dd' -c "wqa" -- "$LAYOUT_FILE"
+  $VIM_BIN $HEADLESS -nEs -u NONE -c '%g/\/\//norm dd' -c "wqa" -- "$LAYOUT_FILE"
 
   # add a missing comma to the last element of array we just deleted
-  $VIM_BIN $HEADLESS -nEs -c '%g/swallows/norm j^%k:s/,$//g' -c "wqa" -- "$LAYOUT_FILE"
+  $VIM_BIN $HEADLESS -nEs -u NONE -c '%g/swallows/norm j^%k:s/,$//g' -c "wqa" -- "$LAYOUT_FILE"
 
   # delete all empty lines
-  $VIM_BIN $HEADLESS -nEs -c '%g/^$/norm dd' -c "wqa" -- "$LAYOUT_FILE"
+  $VIM_BIN $HEADLESS -nEs -u NONE -c '%g/^$/norm dd' -c "wqa" -- "$LAYOUT_FILE"
 
   # pick up floating containers and move them out of the root container
   if [ -n "$GOT_VIM" ]; then
-    $VIM_BIN $HEADLESS -nEs -c '%g/floating_con/norm [{d%GAp' -c "wqa" -- "$LAYOUT_FILE"
+    $VIM_BIN $HEADLESS -nEs -u NONE -c '%g/floating_con/norm [{d%GAp' -c "wqa" -- "$LAYOUT_FILE"
   else
     # nvim has a bug currently:
     # when scripting d% to delete to the next in pair, it actually leaves one of the pair characters there
-    $VIM_BIN $HEADLESS -nEs -c "%g/floating_con/norm [{%ma%d'aGAp" -c "wqa" -- "$LAYOUT_FILE"
+    $VIM_BIN $HEADLESS -nEs -u NONE -c "%g/floating_con/norm [{%ma%d'aGAp" -c "wqa" -- "$LAYOUT_FILE"
   fi
 
   # delete all empty lines
-  $VIM_BIN $HEADLESS -nEs -c '%g/^$/norm dd' -c "wqa" -- "$LAYOUT_FILE"
+  $VIM_BIN $HEADLESS -nEs -u NONE -c '%g/^$/norm dd' -c "wqa" -- "$LAYOUT_FILE"
 
   # add missing commas between the newly created inner parts of the root element
-  $VIM_BIN $HEADLESS -nEs -c '%s/}\n{/},{/g' -c "wqa" -- "$LAYOUT_FILE"
+  $VIM_BIN $HEADLESS -nEs -u NONE -c '%s/}\n{/},{/g' -c "wqa" -- "$LAYOUT_FILE"
 
   # surroun everythin in []
-  $VIM_BIN $HEADLESS -nEs -c 'normal ggO[Go]' -c "wqa" -- "$LAYOUT_FILE"
+  $VIM_BIN $HEADLESS -nEs -u NONE -c 'normal ggO[Go]' -c "wqa" -- "$LAYOUT_FILE"
 
   # autoformat the file
-  $VIM_BIN $HEADLESS -nEs -c 'normal gg=G' -c "wqa" -- "$LAYOUT_FILE"
+  $VIM_BIN $HEADLESS -nEs -u NONE -c 'normal gg=G' -c "wqa" -- "$LAYOUT_FILE"
 
   rm "$ALL_WS_FILE"
 
