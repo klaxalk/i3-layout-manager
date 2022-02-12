@@ -97,8 +97,9 @@ No, it only affects the current workspace. However, layouts can be used on anoth
 Vim is great for this kind of work. A simple one-liner can do complex edits which would be difficult to program even using, e.g., python. Thanks to this, the layout manager was hacked up in a single day.
 
 ## Troubleshooting
-
-* **On Arch Linux, there is no package `libanyevent-i3-perl`, so my saved layout file says `Can't locate AnyEvent/I3.pm in @INC (you may need to install the AnyEvent::I3 module)`**
-
-Install `perl-anyevent-i3` with your package manager. ([Source](https://old.reddit.com/r/archlinux/comments/289g9u/i3_48_introduces_layout_saving_and_restoring/ci8saf0/))
-
+* On Arch Linux, there is no package `libanyevent-i3-perl`, so my saved layout file says `Can't locate AnyEvent/I3.pm in @INC (you may need to install the AnyEvent::I3 module)`
+  * Install `perl-anyevent-i3` with your package manager. ([Source](https://old.reddit.com/r/archlinux/comments/289g9u/i3_48_introduces_layout_saving_and_restoring/ci8saf0/))
+* Your system locale must be set to something that uses UTF8, otherwise you will see ```xkbcommon``` errors.
+  * https://wiki.archlinux.org/title/locale#Setting_the_system_locale
+* Arch linux removed the x11-xserver-utils package. You can install the ```xorg-apps``` package instead.
+  * https://www.reddit.com/r/archlinux/comments/69r15f/xorgserverutils_removed/ 
