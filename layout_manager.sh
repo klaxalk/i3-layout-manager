@@ -357,7 +357,7 @@ MATCH ANY" | rofi -i -dmenu -p "How to identify windows? (xprop style)")
   if [[ "$CRITERION" = "default" ]]; then
     $VIM_BIN $HEADLESS -nEs -u NONE -c "%g/instance/norm ^dW" -c "wqa" -- "$LAYOUT_FILE"
   elif [[ "$CRITERION" = "any" ]]; then
-    $VIM_BIN $HEADLESS -nEs -u NONE -c '%g/instance/norm ^dW3f"di"' -c "wqa" -- "$LAYOUT_FILE"
+    $VIM_BIN $HEADLESS -nEs -u NONE -c '%g/instance/norm ^dW3f"di"i^.+$' -c "wqa" -- "$LAYOUT_FILE"
   elif [[ "$CRITERION" = "specific" ]]; then
 
     LAST_LINE=1
