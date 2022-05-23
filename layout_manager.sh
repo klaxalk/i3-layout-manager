@@ -14,35 +14,21 @@
 
 # #{ CHECK DEPENDENCIES
 
-VIM_BIN="$(whereis -b vim | awk '{print $2}')"
-NVIM_BIN="$(whereis -b nvim | awk '{print $2}')"
-JQ_BIN="$(whereis -b jq | awk '{print $2}')"
-XDOTOOL_BIN="$(whereis -b xdotool | awk '{print $2}')"
-XRANDR_BIN="$(whereis -b xrandr | awk '{print $2}')"
-ROFI_BIN="$(whereis -b rofi | awk '{print $2}')"
+dependenciesToCheck=("vim" "nvim" "jq" "xdotool" "xrandr" "rofi")
+missingDepFlag=0
 
-if [ -z "$NVIM_BIN" ] && [ -z "$VIM_BIN" ]; then
-  echo missing vim or neovim, please install dependencies
-  exit 1
-fi
+for dep in "${dependenciesToCheck[@]}"
+do
+  if [ -z "$(whereis -b $dep | awk '{print $2}')" ]
+  then
+    echo "Missing $dep."
+    missingDepFlag=1
+  fi
+done
 
-if [ -z "$JQ_BIN" ]; then
-  echo missing jq, please install dependencies
-  exit 1
-fi
-
-if [ -z "$XDOTOOL_BIN" ]; then
-  echo missing xdotool, please install dependencies
-  exit 1
-fi
-
-if [ -z "$XRANDR_BIN" ]; then
-  echo missing xrandr, please install dependencies
-  exit 1
-fi
-
-if [ -z "$ROFI_BIN" ]; then
-  echo missing rofi, please install dependencies
+if [ $missingDepFlag -eq 1 ]
+then
+  echo "Please install missing dependencies."
   exit 1
 fi
 
