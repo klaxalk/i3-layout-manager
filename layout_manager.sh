@@ -73,8 +73,8 @@ if [ ${#MISSING_DEPENDENCIES[@]} -gt 0 ]; then
   else
     echo "Skipping installation of dependencies. The script may not work as expected."
 exit 1
+  fi
 fi
-
 # #}
 
 if [ -z "$XDG_CONFIG_HOME" ]; then
