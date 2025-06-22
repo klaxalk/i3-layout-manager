@@ -14,38 +14,67 @@
 
 # #{ CHECK DEPENDENCIES
 
-VIM_BIN="$(whereis -b vim | awk '{print $2}')"
-NVIM_BIN="$(whereis -b nvim | awk '{print $2}')"
-JQ_BIN="$(whereis -b jq | awk '{print $2}')"
-XDOTOOL_BIN="$(whereis -b xdotool | awk '{print $2}')"
-XRANDR_BIN="$(whereis -b xrandr | awk '{print $2}')"
-ROFI_BIN="$(whereis -b rofi | awk '{print $2}')"
+# Detect Linux distribution
+DISTRO=$(lsb_release -is 2>/dev/null || echo "Unkown")
 
-if [ -z "$NVIM_BIN" ] && [ -z "$VIM_BIN" ]; then
-  echo missing vim or neovim, please install dependencies
-  exit 1
+# Function to install a package based on the detected DISTRO
+install_package(){
+  PACKAGE=$1
+  case "$DISTRO" in
+    Ubuntu|Debian)
+      sudo apt update && sudo apt install -y "$PACKAGE"
+      ;;
+    Fedora)
+      sudo dnf install -y "$PACKAGE"
+      ;;
+    openSUSE|SUSE)
+      sudo zypper install -y "$PACKAGE"
+      ;;
+    Arch)
+      sudo pacman -Syu "$PACKAGE" --noconfirm
+      ;;
+    *)
+      echo "Unsupported distribution: $DISTRO"
+      exit 1
+      ;;
+  esac
+}
+
+# Check dependencies and collect missing ones
+MISSING_DEPENDENCIES=()
+check_dependency() {
+  BIN_PATH=$(whereis -b "$1" | awk '{print $2}')
+  if [ -z "$BIN_PATH" ]; then
+    MISSING_DEPENDENCIES+=("$2")
+  fi
+}
+
+# List of dependencies and their package names
+check_dependency "vim" "vim"
+check_dependency "nvim" "neovim"
+check_dependency "jq" "jq"
+check_dependency "xdotool" "xdotool"
+check_dependency "xrandr" "xrandr"
+check_dependency "rofi" "rofi"
+
+# Ensure at least one editor is available
+if [ -z "$(whereis -b vim | awk '{print $2}')" ] && [ -z "$(whereis -b nvim | awk '{print $2}')" ]; then
+  MISSING_DEPENDENCIES+=("vim")
 fi
 
-if [ -z "$JQ_BIN" ]; then
-  echo missing jq, please install dependencies
-  exit 1
+# Prompt to install missing dependencies
+if [ ${#MISSING_DEPENDENCIES[@]} -gt 0 ]; then
+  echo "The following dependencies are missing: ${MISSING_DEPENDENCIES[*]}"
+  read -p "Do you want to install them? [y/N]: " RESPONSE
+  if [[ "$RESPONSE" =~ ^[Yy]$ ]]; then
+    for PACKAGE in "${MISSING_DEPENDENCIES[@]}"; do
+      install_package "$PACKAGE"
+    done
+  else
+    echo "Skipping installation of dependencies. The script may not work as expected."
+exit 1
+  fi
 fi
-
-if [ -z "$XDOTOOL_BIN" ]; then
-  echo missing xdotool, please install dependencies
-  exit 1
-fi
-
-if [ -z "$XRANDR_BIN" ]; then
-  echo missing xrandr, please install dependencies
-  exit 1
-fi
-
-if [ -z "$ROFI_BIN" ]; then
-  echo missing rofi, please install dependencies
-  exit 1
-fi
-
 # #}
 
 if [ -z "$XDG_CONFIG_HOME" ]; then
